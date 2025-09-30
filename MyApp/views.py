@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import CityModel
@@ -5,9 +6,10 @@ from .forms import CityForm
 
 
 
+
 # Create your views here.
 def index(request):
-	appid = '30814faf0bf2eaa9e852c19ea73a6522'
+	appid = '089b41837623a98e1ad261c4b10ee69b'
 	# appid = os.environ['appid']
 	url = 'https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=' + appid
 
