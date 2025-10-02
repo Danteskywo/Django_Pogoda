@@ -6,7 +6,9 @@ body {
     background-repeat: no-repeat;/* избегать повторения изображения */
     
     /* Общие стили текста */
-    
+    font-family: "Cormorant", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
     color: #000000;                        /* цвет текста — белый, чтобы хорошо читался на фоне */
     margin: 0;
     padding: 20px;
