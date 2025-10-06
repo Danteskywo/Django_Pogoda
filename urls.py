@@ -20,7 +20,6 @@ from MyApp import views
 
 urlpatterns = [
     path('', views.index),
-    path('check-nickname/', views.check_nickname, name = 'check_nickname'),
-    path('check-category-products/', views.check_category_products, name='check_category_products'),
-    # path('track-click/', views.track_click, name = 'track_click'),
+    path('stats/', views.stats_page, name = 'status'),
+    path('track-click/', views.track_click, name = 'track_click'),
 ]
