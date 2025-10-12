@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Погода</title>
+    <style>
+        .city-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .city-card:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Погода в городах</h1>
+    
+    <!-- Форма добавления города -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.name }}
+        <button type="submit" onclick="trackButtonClick('Добавить город')">Добавить</button>
+    </form>
+
+    <!-- Ссылка на статистику -->
+    <a href="/stats/" onclick="trackButtonClick('Переход в статистику')">📊 Статистика</a>
+
+    <!-- Список городов -->
+    {% for city in all_info %}
+    <div class="city-card" onclick="trackCityClick('{{ city.city }}', '{{ city.id }}')">
+        <h3>{{ city.city }}</h3>
+        <p>Температура: {{ city.temp }}°C</p>
+        <img src="http://openweathermap.org/img/w/{{ city.icon }}.png" alt="Погода">
+    </div>
+    {% endfor %}
+
+    <script>
+        function trackCityClick(cityName, cityId) {
+            fetch('/track-click/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    product_id: cityId,
+                    product_name: cityName
+                })
+            });
+        }
+
+        function trackButtonClick(buttonName) {
+            fetch('/track-click/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    button_name: buttonName
+                })
+            });
+        }
+
+        // Отслеживаем загрузку страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            trackButtonClick('Загрузка страницы завершена');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .back-btn { display: inline-block; margin-bottom: 20px; padding: 10px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+        .stats-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .total-stats { background: #f8f9fa; padding: 15px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-btn" onclick="trackButtonClick('Назад на главную')">← На главную</a>
+    <h1>📊 Статистика кликов</h1>
+    
+    <div class="total-stats">
+        <h2>Общая статистика:</h2>
+        <p><strong>Всего кликов по городам:</strong> {{ total_clicks }}</p>
+        <p><strong>Всего действий пользователей:</strong> {{ total_actions }}</p>
+        {% if most_popular %}
+        <p><strong>Самый популярный город:</strong> {{ most_popular.product_name }} ({{ most_popular.click_count }} кликов)</p>
+        {% endif %}
+    </div>
+
+    <div class="stats-section">
+        <h2>Популярность кнопок:</h2>
+        <table>
+            <tr>
+                <th>Кнопка/Действие</th>
+                <th>Количество кликов</th>
+            </tr>
+            {% for stat in button_stats %}
+            <tr>
+                <td>{{ stat.button_name }}</td>
+                <td>{{ stat.count }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" style="text-align: center;">Нет данных о кликах</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="stats-section">
+        <h2>Последние действия (20 последних):</h2>
+        <table>
+            <tr>
+                <th>Время</th>
+                <th>Действие</th>
+                <th>Страница</th>
+                <th>IP адрес</th>
+            </tr>
+            {% for action in recent_actions %}
+            <tr>
+                <td>{{ action.click_time|date:"d.m.Y H:i:s" }}</td>
+                <td>{{ action.button_name }}</td>
+                <td>{{ action.page_url }}</td>
+                <td>{{ action.ip_address }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center;">Нет данных о действиях</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="stats-section">
+        <h2>Статистика по городам:</h2>
+        <table>
+            <tr>
+                <th>Город</th>
+                <th>ID</th>
+                <th>Кликов</th>
+                <th>Последний клик</th>
+            </tr>
+            {% for stat in click_stats %}
+            <tr>
+                <td>{{ stat.product_name }}</td>
+                <td>{{ stat.product_id }}</td>
+                <td>{{ stat.click_count }}</td>
+                <td>{{ stat.last_click|date:"d.m.Y H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center;">Нет данных о кликах по городам</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script>
+        function trackButtonClick(buttonName) {
+            fetch('/track-click/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    button_name: buttonName
+                })
+            });
+        }
+    </script>
+</body>
+</html>

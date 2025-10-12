@@ -1,0 +1,80 @@
+body {
+    /* Фоновое изображение — укажите свой путь, например, в папке static/images */
+    background-image: url('/static/images/sochi.jpg');
+    background-size: cover;      /* чтобы изображение покрывало весь экран */
+    background-position: center; /* центрирование изображения */
+    background-repeat: no-repeat;/* избегать повторения изображения */
+    
+    /* Общие стили текста */
+    font-family: "Cormorant", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    color: #000000;                        /* цвет текста — белый, чтобы хорошо читался на фоне */
+    margin: 0;
+    padding: 20px;
+}
+
+/* Стиль для заголовков */
+h1, h2, h3 {
+    
+    color: #000000; /* яркий цвет заголовков */
+}
+
+/* Стиль для формы и элементов формы */
+form {
+    
+    background-color: rgba(0, 0, 0, 0.5); /* полупрозрачный фон */
+    padding: 15px;
+    border-radius: 8px;
+    max-width: 400px;
+    /* margin: 20px auto; */
+}
+
+/* Стиль для кнопок */
+button {
+    
+    background-color: #ffe600;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #ffcc00;
+}
+
+/* Для отображения информации о городе */
+.all_info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.city-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    width: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.col-9{
+
+    font-optical-sizing: auto;
+}
+.submit-button {
+    /* Твои стили, например */
+    background-color: #ffe600;
+    border: 2px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.row {
+    font-family: "Bitcount Prop Single Ink", system-ui;
+}
